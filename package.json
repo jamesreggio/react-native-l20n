@@ -1,0 +1,32 @@
+{
+  "name": "react-native-l20n",
+  "version": "0.0.0",
+  "description": "Mozilla's L20n localization framework for React Native",
+  "license": "MIT",
+  "keywords": [
+    "l10n",
+    "l20n",
+    "localization",
+    "i18n",
+    "internationalization",
+    "messageformat",
+    "gettext",
+    "react",
+    "react-native"
+  ],
+  "author": {
+    "name": "James Reggio",
+    "email": "james.reggio@gmail.com",
+    "url": "http://regg.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesreggio/react-native-l20n.git"
+  },
+  "homepage": "https://github.com/jamesreggio/react-native-l20n",
+  "bugs": "https://github.com/jamesreggio/react-native-l20n/issues",
+  "main": "index.js",
+  "dependencies": {
+    "intl": "^1.2.4"
+  }
+}
