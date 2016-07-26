@@ -3,6 +3,53 @@
 Experimental adaptation of Mozilla's [L20n](http://l20n.org/) localization
 framework for use within [React Native](https://facebook.github.io/react-native/).
 
+```bash
+npm install --save react-native-l20n
+```
+
+```javascript
+import React, {Component} from 'react';
+import {View, Text} from 'react-native';
+import L20n, {ftl} from 'react-native-l20n';
+
+const l20n = L20n.create({
+  en: ftl`
+    product = react-native-l20n
+    welcome = Welcome, {$name}, to {product}!
+    description =
+      | {product} makes it possible to harness the forward-thinking
+      | design of Mozilla's L20n in an idiomatic fashion.
+    stars = This repository has {$count ->
+      [0] no stars
+      [1] one star
+     *[other] {$count} stars
+    } on GitHub.
+  `,
+
+  es: ftl`
+    welcome = Bienvenidos, {$name}, a {product}!
+  `,
+});
+
+class Example extends Component {
+  render() {
+    return (
+      <View>
+        <Text style={{fontWeight: 'bold'}}>
+          {l20n.welcome({name: 'James'})}
+        </Text>
+        <Text>
+          {l20n.description()}
+        </Text>
+        <Text>
+          {l20n.stars({count: 1000})}
+        </Text>
+      </View>
+    );
+  }
+}
+```
+
 ### Why L20n?
 
 Mozilla has decades of experience shipping localized products. The design of
@@ -20,18 +67,18 @@ getting started with L20n:
 
 * Learn the syntax with this quick step-by-step [guide](http://l20n.org/learn/).
 
-* Tinker with framework with this [in-browser IDE](http://l20n.github.io/tinker/).
+* Tinker with framework with this [browser-based IDE](http://l20n.github.io/tinker/).
 
 * Read about the decisions that underpin the powerful, asymmetric design of the
   framework in this [blog post](http://informationisart.com/21/).
 
 ### What's different for React Native?
 
-The main drawback of L20n, at present, is that it's designed for the web and
-takes a heavy dependency upon the DOM as its interface. Just as `StyleSheet`
-brought the best of CSS for use in React Native, this module decouples L20n
-from the DOM and makes it available to your React Native app through a
-familiar, idiomatic interface.
+The main drawback of L20n, from my perspective, is that it takes a heavy
+dependency upon the DOM as its formal interface. Just as `StyleSheet` brought
+the best of CSS for use in React Native, this module decouples L20n from the
+DOM and makes it available to your React Native app through a familiar,
+idiomatic interface.
 
 The first similarity to `StyleSheet` is that L20n translations are meant to be
 declared within the component they're used, alongside styles. For example:
@@ -65,53 +112,10 @@ website with the exception of their [guide to FTL](http://l20n.org/learn/), the
 L20n translation format.
 
 Finally, it's worth noting that L20n depends upon the ECMAScript
-Internationalization API (found in browsers under `window.Intl`), which this
-module provides via polyfill. FTL's [built-in functions](https://github.com/l20n/l20n.js/blob/97d9e50d5ec7ae84fed0db8a910c21f78880a5f1/src/intl/builtins.js)
-(including `NUMBER`, `PLURAL`, and `DATETIME`) are delegated to the
-corresponding Internationalization API with their arguments intact. This module
-also removes bidirectional isolation characters which are inserted by L20n, but
-not supported by either React Native platform.
-
-## Example
-
-```bash
-npm install --save react-native-l20n
-```
-
-```javascript
-import React, {Component} from 'react';
-import {View, Text} from 'react-native';
-import L20n, {ftl} from 'react-native-l20n';
-
-const l20n = L20n.create({
-  en: ftl`
-    product = react-native-l20n
-    welcome = Welcome, {$name}, to {product}!
-    description =
-      | {product} makes it possible to harness the forward-thinking
-      | design of Mozilla's L20n in an idiomatic fashion.
-  `,
-
-  es: ftl`
-    welcome = Bienvenidos, {$name}, a {product}!
-  `,
-});
-
-class Example extends Component {
-  render() {
-    return (
-      <View>
-        <Text style={{fontWeight: 'bold'}}>
-          {l20n.welcome({name: 'James'})}
-        </Text>
-        <Text>
-          {l20n.description()}
-        </Text>
-      </View>
-    );
-  }
-}
-```
+Internationalization API (found in browsers under `window.Intl`), which is
+provided via polyfill. This module also removes bidirectional isolation
+characters which are inserted by L20n, but not supported by either React Native
+platform.
 
 ## API
 
@@ -129,7 +133,7 @@ When the function is invoked, a translation for the current locale is used; if
 none is available, the default locales are attempted in order. Failing that,
 the translation key is returned.
 
-*Example:*
+**Example:**
 
 ```javascript
 import L20n from 'react-native-l20n';
@@ -169,9 +173,9 @@ translation format.
 
 The `ftl` tag is not required, but enables you to indent your translations,
 which is not normally legal. It also removes newlines from piped, multi-line
-translations, which better emulates the whitespace-collapsing nature of HTML.
+translations, which emulates the whitespace-collapsing nature of HTML.
 
-*Example:*
+**Example:**
 
 ```javascript
 import {ftl} from 'react-native-l20n';
@@ -210,16 +214,16 @@ module to mature it into a scalable localization solution:
 
 * Handle the [`TODOs`](/index.js) listed at the top of the source.
 
-* Generalize this module for use in browser-based React, or completely apart
-  from any framework. This would essentially substitute for the L20n [Node.js interface](https://github.com/l20n/l20n.js/blob/97d9e50d5ec7ae84fed0db8a910c21f78880a5f1/docs/node.md),
+* Generalize this module for use in browser-based React or apart from any
+  framework. This would essentially substitute for the L20n [Node.js interface](https://github.com/l20n/l20n.js/blob/97d9e50d5ec7ae84fed0db8a910c21f78880a5f1/docs/node.md),
   which is a bit lacking.
 
 * Build tooling to collect strings from components, and support
-  loading/bundling of translation into separate files, apart from the component
-  definitions.
+  loading/bundling of translations into separate files, apart from the
+  component definitions.
 
 * Build a runtime inspector to identify translation keys.
 
 More than anything, I'd appreciate your feedback on what it will take for this
-module to become a production-grade solution for your needs. Please open an
+module to become a production-grade solution for your project. Please open an
 [issue](https://github.com/jamesreggio/react-native-l20n/issues) to discuss.
