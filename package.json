@@ -1,6 +1,6 @@
 {
   "name": "react-native-l20n",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Mozilla's L20n localization framework for React Native",
   "license": "MIT",
   "keywords": [
