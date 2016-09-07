@@ -79,5 +79,5 @@ export function ftl(strings, ...values) {
     .join('')
     .replace(/^[ ]*/mg, '')
     .replace(/[ ]{2,}$/mg, '\n|')
-    .replace(/[ ]*\n\|[ ]*(?!$)/mg, ' ');
+    .replace(/([^=])[ ]*\n\|[ ]*(?!$)/mg, '$1');
 };
