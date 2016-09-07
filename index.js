@@ -72,10 +72,12 @@ export default L20n;
 // ES6 templated string tag for FTL, the L20n translation format.
 // Removes leading whitespace, allowing FTL to be written at any indentation.
 // Also removes explicit newlines from piped, multi-line translations.
+// Lines with two or more trailing spaces will receive an explicit newline.
 export function ftl(strings, ...values) {
   return strings
     .map((string, i) => string + (i < values.length ? values[i] : ''))
     .join('')
-    .replace(/^\s*/mg, '')
-    .replace(/\s*\n\|\s*/mg, ' ');
+    .replace(/^[ ]*/mg, '')
+    .replace(/[ ]{2,}$/mg, '\n|')
+    .replace(/[ ]*\n\|[ ]*(?!$)/mg, ' ');
 };
