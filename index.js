@@ -1,6 +1,11 @@
 // L20n depends upon the ECMAScript Internationalization API,
 // which we polyfill with this module built for Node.js.
-import 'intl';
+import Intl from 'intl';
+global.Intl = global.Intl || Intl;
+
+// L20n also uses WeakSet, which isn't available in the Android runtime.
+import WeakSet from 'weakset';
+global.WeakSet = global.WeakSet || WeakSet;
 
 // We have to vendor a copy of L20n for now, because its Node.js build
 // takes an unnecessary dependency upon `fs`, which we manually remove.

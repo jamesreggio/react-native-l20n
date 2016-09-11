@@ -27,6 +27,7 @@
   "bugs": "https://github.com/jamesreggio/react-native-l20n/issues",
   "main": "index.js",
   "dependencies": {
-    "intl": "^1.2.4"
+    "intl": "1.2.4",
+    "weakset": "1.0.0"
   }
 }
