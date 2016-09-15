@@ -83,5 +83,5 @@ export function ftl(strings, ...values) {
     .map((string, i) => string + (i < values.length ? values[i] : ''))
     .join('')
     .replace(/^[ ]*/mg, '')
-    .replace(/(^\|.*\S{2})\n\|[ ]*(?!$)/mg, '$1 ');
+    .replace(/([^ \n\]=]{2})\n\|[ ]*(?!$)/mg, '$1 ');
 };
