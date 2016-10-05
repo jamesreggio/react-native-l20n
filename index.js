@@ -59,7 +59,7 @@ const L20n = {
     // Build a context for each locale, and build the instance object with
     // format functions bound to each unique key.
     Object.keys(translations).forEach((locale) => {
-      const context = new Intl.MessageContext(locale);
+      const context = new global.Intl.MessageContext(locale);
       const errors = context.addMessages(translations[locale]);
       errors.forEach((error) => console.warn(error));
       for ([key] of context.messages) {
